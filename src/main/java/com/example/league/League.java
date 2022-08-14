@@ -20,16 +20,20 @@ public class League {
         BufferedReader br;
         List<LeagueScore> finalResult = new ArrayList<>();
 
-        try {
-            br = new BufferedReader(new FileReader("/home/james/NetBeansProjects/league/files/test.txt"));
-            String line = br.readLine();
-            while (line != null) {
-                finalResult.addAll(MatchResult.getMatchResult(line));
-                line = br.readLine();
+        if (args.length > 0 && !args[0].isEmpty()) {
+            try {
+                br = new BufferedReader(new FileReader(args[0]));
+                String line = br.readLine();
+                while (line != null) {
+                    finalResult.addAll(MatchResult.getMatchResult(line));
+                    line = br.readLine();
+                }
+                LeagueResult.drawLeagueResult(finalResult);
+            } catch (IOException ex) {
+                Logger.getLogger(League.class.getName()).log(Level.SEVERE, null, ex);
             }
-            LeagueResult.drawLeagueResult(finalResult);
-        } catch (IOException ex) {
-            Logger.getLogger(League.class.getName()).log(Level.SEVERE, null, ex);
+        } else {
+            System.err.println("Please include the file to run.");
         }
     }
 }
